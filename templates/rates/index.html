@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курси валют ПриватБанк</title>
+
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            background: url("{% static 'rates/background.jpg' %}") no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .card {
+            width: min(820px, 92vw);
+            background: rgba(255, 255, 255, .12);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+            border: 1px solid rgba(255, 255, 255, .3);
+            backdrop-filter: blur(8px);
+            padding: 24px 28px;
+            margin: auto;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-weight: 700;
+            letter-spacing: .3px;
+        }
+
+        .sub {
+            opacity: .9;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px 10px;
+            text-align: left;
+        }
+
+        th {
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255, 255, 255, .35);
+        }
+
+        tr+tr td {
+            border-top: 1px dashed rgba(255, 255, 255, .2);
+        }
+
+        .pill {
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, .3);
+            font-size: 12px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        @media (max-width: 640px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>Курси валют ПриватБанк</h1>
+        <div class="sub">Джерело: публічне API (non-cash/cards). Оновлення раз на годину → зберігаємо у PostgreSQL.
+        </div>
+
+        <h3>Live з API</h3>
+        {% if live %}
+        <table>
+            <tr>
+                <th>Валюта</th>
+                <th>Покупка</th>
+                <th>Продаж</th>
+                <th>База</th>
+            </tr>
+            {% for row in live %}
+            <tr>
+                <td>{{ row.ccy }}</td>
+                <td>{{ row.buy }}</td>
+                <td>{{ row.sale }}</td>
+                <td>{{ row.base_ccy }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>Не вдалося отримати дані з API.</p>
+        {% endif %}
+
+        <h3>Останній знімок у БД</h3>
+        {% if saved %}
+        <p>Час: {{ last_ts }}</p>
+        <table>
+            <tr>
+                <th>Валюта</th>
+                <th>Покупка</th>
+                <th>Продаж</th>
+            </tr>
+            {% for r in saved %}
+            <tr>
+                <td>{{ r.ccy }}</td>
+                <td>{{ r.buy }}</td>
+                <td>{{ r.sale }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>Ще немає збережених знімків. Запустіть команду <code>fetch_rates</code>.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>
