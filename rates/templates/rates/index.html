@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Курси валют ПриватБанк</title>
+    <title>Курси валют</title>
 
     <style>
         body {
@@ -19,14 +19,19 @@
 
         .card {
             width: min(820px, 92vw);
-            background: rgba(255, 255, 255, .12);
+            background: rgba(255, 255, 255, 0.18);
+            /* ✅ прозрачный */
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
-            border: 1px solid rgba(255, 255, 255, .3);
-            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            /* ✅ лёгкое размытие */
+            -webkit-backdrop-filter: blur(10px);
+            /* поддержка Safari */
             padding: 24px 28px;
             margin: auto;
         }
+
 
         h1 {
             margin: 0 0 8px;
@@ -83,8 +88,8 @@
 
 <body>
     <div class="card">
-        <h1>Курси валют ПриватБанк</h1>
-        <div class="sub">Джерело: публічне API (non-cash/cards). Оновлення раз на годину → зберігаємо у PostgreSQL.
+        <h1>Курси валют</h1>
+        <div class="sub">Джерело: публічне API (non-cash/cards). Оновлення раз на 5хв.
         </div>
 
         <h3>Live з API</h3>

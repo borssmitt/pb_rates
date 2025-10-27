@@ -10,7 +10,7 @@ API_URL = os.getenv(
     "PB_API_URL",
     "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5"
 )
-TARGETS = {"USD", "EUR", "GBP", "PLN"}
+TARGETS = {"USD", "EUR"}
 
 
 class Command(BaseCommand):

@@ -72,7 +72,9 @@ DATABASE_ROUTERS = ["pb_rates.dbrouters.RatesRouter"]
 
 # --- Статика ---
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+# STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 
 # --- Локаль и часовой пояс ---
 LANGUAGE_CODE = "en-us"
