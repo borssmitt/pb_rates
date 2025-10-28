@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: rates_db
+    restart: always
+    environment:
+      POSTGRES_DB: rates_db
+      POSTGRES_USER: rates_user
+      POSTGRES_PASSWORD: rates_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # ports:
+    #   - "5432:5432"
+
+  web:
+    build: .
+    container_name: pb_rates_web
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    environment:
+      RATES_DB_NAME: rates_db
+      RATES_DB_USER: rates_user
+      RATES_DB_PASSWORD: rates_password
+      RATES_DB_HOST: db
+      RATES_DB_PORT: 5432
+      PB_API_URL: https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5
+    volumes:
+      - .:/app
+
+volumes:
+  postgres_data:

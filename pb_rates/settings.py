@@ -53,11 +53,11 @@ WSGI_APPLICATION = "pb_rates.wsgi.application"
 
 # --- Две базы данных ---
 DATABASES = {
-    "default": {  # Для системных нужд Django
+    "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     },
-    "rates_db": {  # Для модели Rate — PostgreSQL
+    "rates_db": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.getenv("RATES_DB_NAME", "rates_db"),
         "USER": os.getenv("RATES_DB_USER", "rates_user"),
@@ -66,6 +66,7 @@ DATABASES = {
         "PORT": os.getenv("RATES_DB_PORT", "5432"),
     },
 }
+
 
 # --- Роутер для маршрутизации модели Rate в отдельную базу ---
 DATABASE_ROUTERS = ["pb_rates.dbrouters.RatesRouter"]
